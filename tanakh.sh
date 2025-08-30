@@ -7,7 +7,7 @@
 #   tanakh.sh genesis 1:1
 #   tanakh.sh Genesis 1
 
-TEXT_FILE="/home/shrub/torah/tanakh.txt"
+TEXT_FILE="put the path here"
 
 if [ ! -f "$TEXT_FILE" ]; then
     echo "Error: Complete text file not found at $TEXT_FILE"
