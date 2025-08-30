@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# Tanakh Quote Fetcher Script
-# Usage: tanakh.sh <book> <chapter:verse or chapter>
-# Examples: 
+# tanakh.sh
+# explore the hebrew bible; tanakh
+# usage: tanakh.sh <book> <chapter:verse or chapter>
+# examples: 
 #   tanakh.sh Genesis 1:1
 #   tanakh.sh genesis 1:1
 #   tanakh.sh Genesis 1
