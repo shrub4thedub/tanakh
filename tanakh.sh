@@ -19,7 +19,7 @@ fi
 
 if [ $# -lt 2 ]; then
     echo "Usage: $0 <book> <reference>"
-    echo "Examples: $0 Genesis 1:1"
+    echo "Examples: $0 genesis 1:1"
     echo "          $0 genesis 1"
     exit 1
 fi
@@ -81,7 +81,7 @@ SEARCH_PATTERN="^$ESCAPED_BOOK $REFERENCE$"
 MATCH_LINE=$(grep -n "$SEARCH_PATTERN" "$TEXT_FILE")
 
 if [ -z "$MATCH_LINE" ]; then
-    echo "Quote not found: $BOOK $REFERENCE"
+    echo "quote not found: $BOOK $REFERENCE"
     echo ""
     
     # Try to find the book first
@@ -90,30 +90,30 @@ if [ -z "$MATCH_LINE" ]; then
         # Try finding book in section headers
         BOOK_FOUND=$(grep -i ": $ESCAPED_BOOK\]" "$TEXT_FILE")
         if [ -z "$BOOK_FOUND" ]; then
-            echo "Book '$BOOK' not found in database."
+            echo "book '$BOOK' not found in database."
             echo ""
-            echo "Available books:"
+            echo "available books:"
             grep "^\[.*:" "$TEXT_FILE" | sed 's/\[.*: \(.*\)\]/\1/' | sort | uniq | head -20
         else
-            echo "Book found, but reference '$REFERENCE' not available."
-            echo "Available references for $BOOK (showing first 10):"
+            echo "book found, but reference '$REFERENCE' not available."
+            echo "available references for $BOOK (showing first 10):"
             grep "^$ESCAPED_BOOK " "$TEXT_FILE" | head -10 | cut -d' ' -f2-
         fi
     else
-        echo "Book found, but reference '$REFERENCE' not available."
-        echo "Available references for $BOOK (showing first 10):"
+        echo "book found, but reference '$REFERENCE' not available."
+        echo "available references for $BOOK (showing first 10):"
         grep "^$ESCAPED_BOOK " "$TEXT_FILE" | head -10 | cut -d' ' -f2-
     fi
     exit 1
 fi
 
-# Get line number and extract the quote
+# line number extract quote
 LINE_NUM=$(echo "$MATCH_LINE" | cut -d: -f1)
 
-# Get Hebrew and English text (next 2 lines)
+# get hebrew and english text;next 2 lines
 HEBREW=$(sed -n "$((LINE_NUM + 1))p" "$TEXT_FILE" | sed 's/^HE: //')
 ENGLISH=$(sed -n "$((LINE_NUM + 2))p" "$TEXT_FILE" | sed 's/^EN: //')
 
-# Display the result
+# display the result
 echo "$HEBREW"
 echo "$ENGLISH"
