@@ -7,7 +7,7 @@
 #   tanakh.sh genesis 1:1
 #   tanakh.sh genesis 1
 
-# Automatically detect tanakh.txt in the same directory as the script
+# automatically detect tanakh.txt in the same directory as the script
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TEXT_FILE="$SCRIPT_DIR/tanakh.txt"
 
@@ -18,7 +18,7 @@ fi
 
 if [ $# -eq 0 ]; then
     # no arguments random verse
-    # Find all verse references (lines that end with chapter:verse pattern)
+    # find all verse references; lines that end with chapter:verse pattern
     VERSE_LINES=$(grep -n " [0-9]*:[0-9]*$" "$TEXT_FILE")
     TOTAL_VERSES=$(echo "$VERSE_LINES" | wc -l)
     RANDOM_LINE_NUM=$(shuf -i 1-$TOTAL_VERSES -n 1)
@@ -27,7 +27,7 @@ if [ $# -eq 0 ]; then
     MATCH_LINE=$(echo "$VERSE_LINES" | sed -n "${RANDOM_LINE_NUM}p")
     LINE_NUM=$(echo "$MATCH_LINE" | cut -d: -f1)
     
-    # get hebrew and english text (next 2 lines)
+    # get hebrew and english text 
     HEBREW=$(sed -n "$((LINE_NUM + 1))p" "$TEXT_FILE" | sed 's/^HE: //')
     ENGLISH=$(sed -n "$((LINE_NUM + 2))p" "$TEXT_FILE" | sed 's/^EN: //')
     VERSE_REF=$(sed -n "${LINE_NUM}p" "$TEXT_FILE" | tr '[:upper:]' '[:lower:]')
@@ -53,7 +53,7 @@ REFERENCE="${ARGS[-1]}"
 unset 'ARGS[-1]'
 BOOK="${ARGS[*]}"
 
-# capitalize book name properly (first letter of each word, except prepositions)
+# capitalize book name properly,first letter of each word, except prepositions. yes this is a shitty hack
 BOOK=$(echo "$BOOK" | awk '{
     for(i=1;i<=NF;i++){
         word = tolower($i)
@@ -69,11 +69,11 @@ BOOK=$(echo "$BOOK" | awk '{
 
 # check if reference is just a chapter number (no colon)
 if [[ "$REFERENCE" =~ ^[0-9]+$ ]]; then
-    # Chapter mode - search for all verses in the chapter
+    # chapter mode - search for all verses in the chapter
     CHAPTER="$REFERENCE"
     SEARCH_PATTERN="^$BOOK $CHAPTER:"
     
-    # Find all verses in the chapter
+    # find all verses in the chapter
     MATCHES=$(grep -n "$SEARCH_PATTERN" "$TEXT_FILE")
     
     if [ -z "$MATCHES" ]; then
@@ -81,7 +81,7 @@ if [[ "$REFERENCE" =~ ^[0-9]+$ ]]; then
         exit 1
     fi
     
-    # Display all verses in the chapter
+    # display all verses in the chapter
     echo "$MATCHES" | while read -r line; do
         LINE_NUM=$(echo "$line" | cut -d: -f1)
         HEBREW=$(sed -n "$((LINE_NUM + 1))p" "$TEXT_FILE" | sed 's/^HE: //')
@@ -131,7 +131,7 @@ fi
 # get line number and extract the quote
 LINE_NUM=$(echo "$MATCH_LINE" | cut -d: -f1)
 
-# get Hebrew and english text (next 2 lines)
+# get hebrew and english text 
 HEBREW=$(sed -n "$((LINE_NUM + 1))p" "$TEXT_FILE" | sed 's/^HE: //')
 ENGLISH=$(sed -n "$((LINE_NUM + 2))p" "$TEXT_FILE" | sed 's/^EN: //')
 
