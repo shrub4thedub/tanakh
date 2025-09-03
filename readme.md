@@ -13,7 +13,7 @@ put the txt and sh in the same folder
 git clone https://github.com/shrub4thedub/tanakh
 cd tankah
 chmod +x tanakh.sh
-./tanakh.sh genesis 1
+./tanakh.sh ecclesiastes 7:29
 ```
 
 outputs hebrew first, then english, no formatting
